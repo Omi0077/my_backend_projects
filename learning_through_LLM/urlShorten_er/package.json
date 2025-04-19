@@ -1,0 +1,19 @@
+{
+  "name": "urlshorten_er",
+  "version": "1.0.0",
+  "description": "making a very basic urlshorten_er",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon /home/shanky/Desktop/myBackendProjects/learning_through_LLM/urlShorten_er/backend/index.js"
+  },
+  "author": "omi",
+  "license": "ISC",
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

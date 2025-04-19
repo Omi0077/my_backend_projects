@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMI's URL Shorten-er</title>
+</head>
+<style>
+    .container {
+        background-color: white;
+        border: 2px solid black;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        height: 70%;
+        width: 60%;
+        border: 2px solid black;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <form action="#" class="inp">
+            <input type="text" placeholder="Enter you URl" name="longurl">
+            <input type="submit" value="Shorten">
+            <div class="result"></div>
+        </form>
+    </div>
+</body>
+<script>
+    const form = document.querySelector('.inp')
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+
+        const longURL = e.target.longurl.value
+
+        let res = await fetch('http://localhost:9000/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',  // this tells express that data is in json
+            },
+            body: JSON.stringify({ longURL })
+        })
+
+        let shortURL = await res.text()  //for reciveing as text not json
+        // console.log(shortURL);
+
+        let resultBox = document.querySelector('.result')
+        resultBox.innerHTML = `<h3>Short URL: ${shortURL}</h3>`
+    })
+</script>
+
+</html>

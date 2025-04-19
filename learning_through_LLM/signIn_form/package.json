@@ -1,0 +1,19 @@
+{
+  "name": "form_backend",
+  "version": "1.0.0",
+  "description": "making very begginer register form",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon /home/shanky/Desktop/myBackendProjects/learning_through_LLM/signIn_form/backend/index.js"
+  },
+  "author": "omi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "nodemon": "^3.1.9"
+  }
+}
