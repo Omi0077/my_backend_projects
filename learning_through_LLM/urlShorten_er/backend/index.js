@@ -1,9 +1,20 @@
 import express from 'express'
 import cors from 'cors'
+import connectDB from './DB/index.js'
+import dotenv from 'dotenv'
+import { Url } from './models/url.model.js'
+
+dotenv.config({
+    path: 'backend/.env'
+})
+
+await connectDB()
+// console.log(process.env.MONGODB_URI); // look into this 
+
 
 const PORT = 9000
 
-let URLs = []
+let URLs = await Url.find() // this return array of all url objects in db use findone instead
 let code = 0
 
 const app = express()
@@ -17,17 +28,24 @@ app.use(cors({
 
 // post route to make and send new short urls
 
-app.post('/' , (req,res)=>{
+app.post('/' , async (req,res)=>{
     
     // console.log(typeof req.body.longURL);
     let incomingURL = req.body.longURL;
     let outgoingURL = `http://localhost:${PORT}/${++code}`
 
-    let shortURL = {
-        long : incomingURL,
-        short : outgoingURL
-    }
-    URLs.push(shortURL)
+    // implementing mongoose
+    let url = await Url.create(
+        {
+            orignalUrl: incomingURL,
+            shortUrl: outgoingURL
+        })
+
+    // let shortURL = {
+    //     long : incomingURL,
+    //     short : outgoingURL
+    // }
+    // URLs.push(shortURL)
     console.log(URLs);
 
     //sending short url
@@ -41,8 +59,8 @@ app.get('/:cd',(req,res)=>{
     let incomingURL = `http://localhost:${PORT}/${req.params.cd}`
     // console.log(incomingURL);
     URLs.forEach( (obj)=>{
-        if(obj.short == incomingURL){
-            res.redirect(`https://${obj.long}`)
+        if(obj.shortUrl == incomingURL){
+            res.redirect(`https://${obj.orignalUrl}`)
             return
         }
     } )
